@@ -1,11 +1,11 @@
 - name: Run OpenLane Flow
   run: |
-    mkdir -p $GITHUB_WORKSPACE/pdks
+    mkdir -p "$GITHUB_WORKSPACE/pdks"
 
     docker run --rm \
-      -v $PWD/OpenLane:/openlane \
-      -v $GITHUB_WORKSPACE/designs:/openlane/designs \
-      -v $GITHUB_WORKSPACE/pdks:/openlane/pdks \
+      -v "$PWD/OpenLane:/openlane" \
+      -v "$GITHUB_WORKSPACE/designs:/openlane/designs" \
+      -v "$GITHUB_WORKSPACE/pdks:/openlane/pdks" \
       -e PDK=sky130A \
       -e PDK_ROOT=/openlane/pdks \
       efabless/openlane:latest \
