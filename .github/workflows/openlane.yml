@@ -1,19 +1,11 @@
-name: OpenLane ASIC Flow
+- name: Clone OpenLane
+  run: |
+    git clone https://github.com/The-OpenROAD-Project/OpenLane.git
+    cd OpenLane
+    make
 
-on:
-  push:
-    branches: [ "main" ]
-
-jobs:
-  openlane:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Run OpenLane Flow
-        uses: The-OpenROAD-Project/OpenLane@master
-        with:
-          design-dir: designs
-          design-name: timer_peripheral
+- name: Run OpenLane Flow
+  run: |
+    cd OpenLane
+    make mount
+    ./flow.tcl -design ../designs/timer_peripheral
