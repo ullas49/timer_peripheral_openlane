@@ -2,8 +2,7 @@ name: OpenLane ASIC Flow
 
 on:
   push:
-    branches:
-      - main
+    branches: [ "main" ]
 
 jobs:
   openlane:
@@ -16,10 +15,11 @@ jobs:
       - name: Pull OpenLane Docker image
         run: docker pull efabless/openlane:latest
 
-      - name: Run OpenLane Flow
+      - name: Run OpenLane RTL to GDS
         run: |
           docker run --rm \
             -v $PWD:/work \
-            -w /work \
             efabless/openlane:latest \
-            ./flow.tcl -design timer_peripheral
+            /openlane/flow.tcl \
+            -design /work/designs/timer_peripheral \
+            -tag run1
