@@ -1,11 +1,36 @@
-- name: Clone OpenLane
-  run: |
-    git clone https://github.com/The-OpenROAD-Project/OpenLane.git
-    cd OpenLane
-    make
+name: OpenLane ASIC Flow
 
-- name: Run OpenLane Flow
-  run: |
-    cd OpenLane
-    make mount
-    ./flow.tcl -design ../designs/timer_peripheral
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  openlane:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y docker.io make git
+
+      - name: Enable Docker
+        run: |
+          sudo systemctl start docker
+          sudo usermod -aG docker $USER
+
+      - name: Clone OpenLane
+        run: |
+          git clone https://github.com/The-OpenROAD-Project/OpenLane.git
+          cd OpenLane
+          make
+
+      - name: Run OpenLane Flow
+        run: |
+          cd OpenLane
+          make mount
+          ./flow.tcl -design ../designs/timer_peripheral
