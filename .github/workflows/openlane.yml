@@ -13,16 +13,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install dependencies
-        run: |
-          sudo apt update
-          sudo apt install -y docker.io make git
-
-      - name: Enable Docker
-        run: |
-          sudo systemctl start docker
-          sudo usermod -aG docker $USER
-
       - name: Clone OpenLane
         run: |
           git clone https://github.com/The-OpenROAD-Project/OpenLane.git
