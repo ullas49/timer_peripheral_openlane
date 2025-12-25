@@ -1,14 +1,19 @@
 name: OpenLane ASIC Flow
 
-on: [push]
+on:
+  push:
+    branches: [ "main" ]
 
 jobs:
   openlane:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
 
-      - name: Run OpenLane
-        uses: efabless/openlane-action@v1
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run OpenLane Flow
+        uses: The-OpenROAD-Project/OpenLane@master
         with:
-          design: timer_peripheral
+          design-dir: designs
+          design-name: timer_peripheral
