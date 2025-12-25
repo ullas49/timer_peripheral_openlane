@@ -1,0 +1,14 @@
+name: OpenLane ASIC Flow
+
+on: [push]
+
+jobs:
+  openlane:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Run OpenLane
+        uses: efabless/openlane-action@v1
+        with:
+          design: timer_peripheral
