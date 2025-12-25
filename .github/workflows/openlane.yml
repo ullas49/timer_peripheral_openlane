@@ -1,1 +1,22 @@
+name: OpenLane ASIC Flow
 
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  openlane:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run OpenLane
+        run: |
+          docker pull efabless/openlane:latest
+          docker run --rm \
+            -v $PWD:/work \
+            -w /work \
+            efabless/openlane:latest \
+            bash -c "ls"
