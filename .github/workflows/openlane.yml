@@ -2,7 +2,8 @@ name: OpenLane ASIC Flow
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
 
 jobs:
   openlane:
@@ -12,11 +13,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Run OpenLane
+      - name: Pull OpenLane Docker image
+        run: docker pull efabless/openlane:latest
+
+      - name: Run OpenLane Flow
         run: |
-          docker pull efabless/openlane:latest
           docker run --rm \
             -v $PWD:/work \
             -w /work \
             efabless/openlane:latest \
-            bash -c "ls"
+            ./flow.tcl -design timer_peripheral
