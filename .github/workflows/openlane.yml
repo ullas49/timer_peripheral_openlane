@@ -21,6 +21,11 @@ jobs:
 
       - name: Run OpenLane Flow
         run: |
-          cd OpenLane
-          make mount
-          ./flow.tcl -design ../designs/timer_peripheral
+         cd OpenLane
+         docker run --rm \
+         -v $PWD:/openlane \
+         -v $GITHUB_WORKSPACE/designs:/openlane/designs \
+         -e PDK=sky130A \
+         -e PDK_ROOT=/openlane/pdks \
+          efabless/openlane:latest \
+         ./flow.tcl -design designs/timer_peripheral
